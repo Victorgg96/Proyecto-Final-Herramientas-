@@ -36,7 +36,7 @@ proyecto_sismos_v2/
 ## ⚙️ Instalación
 
 ```powershell
-cd "C:\Users\vican\OneDrive\Escritorio\Claude Code\proyecto_sismos_v2"
+cd "Carpeta donde guardes el repo"
 py -3.11 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
