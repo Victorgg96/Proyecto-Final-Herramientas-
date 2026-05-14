@@ -1,10 +1,25 @@
 """Configuracion global del proyecto SSN-UNAM v2 (pandas + DuckDB)."""
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 
-CSV_FUENTE = Path(r"C:\Users\vican\OneDrive\Escritorio\Claude Code\SSNMX_catalogo_19000101_20260407.csv")
+CSV_NOMBRE = "SSNMX_catalogo_19000101_20260407.csv"
+
+
+def _first_existing_path(*candidates):
+    for candidate in candidates:
+        if candidate and candidate.exists():
+            return candidate
+    return candidates[0] if candidates else None
+
+
+CSV_FUENTE = _first_existing_path(
+    Path(os.environ["SSN_CSV_FUENTE"]).expanduser() if os.environ.get("SSN_CSV_FUENTE") else None,
+    ROOT / CSV_NOMBRE,
+    Path(r"C:\Users\vican\OneDrive\Escritorio\Claude Code\SSNMX_catalogo_19000101_20260407.csv"),
+)
 
 RAW_CSV = DATA / "raw" / "SSNMX_catalogo_19000101_20260407.csv"
 BRONZE_PATH = DATA / "bronze" / "sismos_raw"
