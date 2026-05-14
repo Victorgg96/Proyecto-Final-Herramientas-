@@ -97,16 +97,6 @@ Imprime PB-1, PB-2, PB-3 + extras en consola.
 2. Registra vistas externas con `CREATE OR REPLACE TEMP VIEW … USING parquet`.
 3. Abre `sql/queries_databricks.sql` en el SQL Editor y ejecuta Q1-Q10.
 
-## 📝 Entregables
-
-- ✅ Código fuente (`src/`)
-- ✅ Queries SQL Databricks-ready (`sql/`)
-- ✅ Dashboard interactivo (`src/dashboard/`)
-- ✅ Reporte académico (`REPORTE_FINAL.md`)
-- ✅ Diccionario + bitácora de decisiones (`docs/`)
-- ⏳ Screenshots del dashboard *(generar al ejecutar)*
-- ⏳ Screenshots del dashboard *(generar al ejecutar y agregar al reporte)*
-
 ## ❗ Troubleshooting
 
 | Problema | Solución |
@@ -115,6 +105,3 @@ Imprime PB-1, PB-2, PB-3 + extras en consola.
 | `No se encontró CSV` | Verificar ruta en `config/settings.py` (`CSV_FUENTE`) |
 | Streamlit no abre | Abrir manualmente `http://localhost:8501` |
 | Pandas usa mucha memoria | El dataset son ~50 MB; con 4 GB de RAM va sobrado |
-
-## 👥 Integrantes y roles
-Ver `REPORTE_FINAL.md` §9 (tabla de cumplimiento T-V/T-B/T-I/T-G/T-E/T-K).
