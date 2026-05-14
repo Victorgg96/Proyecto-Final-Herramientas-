@@ -1,4 +1,4 @@
-# Bitácora de Decisiones Técnicas — v2
+# Bitácora de Decisiones Técnicas
 
 | # | Decisión | Justificación |
 |---|---|---|
