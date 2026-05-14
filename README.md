@@ -105,7 +105,7 @@ Imprime PB-1, PB-2, PB-3 + extras en consola.
 - ✅ Reporte académico (`REPORTE_FINAL.md`)
 - ✅ Diccionario + bitácora de decisiones (`docs/`)
 - ⏳ Screenshots del dashboard *(generar al ejecutar)*
-- ⏳ Notebook opcional para Colab/Databricks
+- ⏳ Screenshots del dashboard *(generar al ejecutar y agregar al reporte)*
 
 ## ❗ Troubleshooting
 

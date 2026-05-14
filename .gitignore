@@ -11,3 +11,9 @@ __pycache__/
 # Datos y logs (opcional, pero recomendado por tu estructura)
 *.log
 data/
+
+# Claude Code internals
+.claude/
+
+# DuckDB generado localmente
+*.duckdb

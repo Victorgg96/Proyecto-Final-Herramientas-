@@ -11,7 +11,7 @@ El proyecto implementa un pipeline de datos de sismos del SSN-UNAM con arquitect
 - `Gold`: tablas agregadas listas para análisis y dashboard.
 - `Streamlit`: dashboard interactivo local.
 - `DuckDB / SQL`: consultas analíticas locales y portables a Databricks.
-- `Notebook`: EDA exploratorio para gráficas y evidencias del reporte.
+- `DuckDB / SQL`: consultas analíticas locales y portables a Databricks.
 
 ## 2. Requisitos mínimos
 
@@ -68,7 +68,7 @@ Configuración central.
 
 Variables útiles:
 - `SSN_CSV_FUENTE`: permite apuntar al CSV fuente desde otra ruta.
-- `SSN_PROJECT_ROOT`: útil para Colab o notebooks fuera de la carpeta estándar.
+- `SSN_PROJECT_ROOT`: útil si corres scripts desde una ruta distinta a la raíz del proyecto.
 
 ### `data/`
 Salida real del pipeline.
@@ -107,10 +107,6 @@ Salida real del pipeline.
 - `ddl_star_schema.sql`: modelo estrella teórico.
 - `queries_databricks.sql`: queries SQL listas para Databricks o SQL compatible.
 
-### `notebooks/`
-
-- `EDA_exploratorio.ipynb`: notebook para exploración y capturas.
-
 ## 5. Cómo correr el dashboard
 
 Primero corre el pipeline completo. Después:
@@ -133,59 +129,7 @@ Si después quieres moverle al estilo del dashboard, el archivo principal es `sr
 - `st.set_page_config(...)` controla layout, título e ícono.
 - Las pestañas del dashboard están más abajo en el mismo archivo.
 
-## 6. Cómo usar el notebook en local
-
-El notebook ya está preparado para detectar la ruta del proyecto de forma más robusta.
-
-### Flujo recomendado
-
-1. Ejecuta `python run_all.py`.
-2. Abre `notebooks/EDA_exploratorio.ipynb`.
-3. Ejecuta las celdas en orden.
-4. Las gráficas se guardan en `docs/diagramas/`.
-
-### Qué produce
-
-- Histograma de magnitudes.
-- Sismos por año.
-- Top 15 estados.
-- Heatmap hora vs mes.
-
-## 7. Cómo usar el notebook en Colab
-
-### Opción recomendada
-
-Colab funciona mejor si haces esto:
-
-1. Sube o clona el repositorio en Colab.
-2. Monta Google Drive si vas a guardar datos o resultados ahí.
-3. Instala dependencias.
-4. Define estas variables de entorno si hace falta:
-   - `SSN_PROJECT_ROOT`
-   - `SSN_CSV_FUENTE`
-
-### Ejemplo de inicio en Colab
-
-```python
-from google.colab import drive
-drive.mount('/content/drive')
-```
-
-Luego:
-
-```python
-%cd /content/drive/MyDrive/proyecto_sismos_v2
-!pip install -r requirements.txt
-!python run_all.py
-```
-
-### Qué debes revisar en Colab
-
-- Que el CSV fuente exista en la ruta apuntada por `SSN_CSV_FUENTE`.
-- Que el repo esté en una ruta que tenga `config/settings.py`.
-- Que el notebook encuentre `data/silver/` y `data/gold/` ya generados.
-
-## 8. Qué hacer con `08_consultas_duckdb.py`
+## 6. Qué hacer con `08_consultas_duckdb.py`
 
 Ese script imprime resultados en consola. No genera archivo por defecto.
 
@@ -224,7 +168,7 @@ O bien copia y pega las tablas directamente en `REPORTE_FINAL.md`.
 - No lo dejes solo en consola si tu entrega final es un reporte.
 - No uses tablas Gold sin mencionar la query que las generó.
 
-## 9. Cómo usar SQL / Databricks
+## 7. Cómo usar SQL / Databricks
 
 La carpeta `sql/` no está pensada para Angular. Está pensada para análisis SQL.
 
@@ -251,7 +195,7 @@ Las queries esperan estas tablas/vistas:
 - `gold_evolucion_historica_anual`
 - `gold_evolucion_historica_mensual`
 
-## 10. Cómo conectar Angular
+## 8. Cómo conectar Angular
 
 En este repositorio no existe una app Angular todavía. Lo que sí existe es una base de datos analítica en Parquet y SQL.
 
@@ -275,7 +219,7 @@ Angular consumiría esos endpoints con `HttpClient`.
 - Significativos: eventos con magnitud mayor o igual a 5.0.
 - Evolución: series de tiempo anual y mensual.
 
-## 11. Sobre Antigravity
+## 9. Sobre Antigravity
 
 No existe integración nativa con Antigravity dentro del repo.
 
@@ -295,16 +239,12 @@ Si Antigravity no lee Parquet directo, el flujo práctico es este:
 3. Expón un API simple que lea esos Parquet y regrese JSON.
 4. Conecta Antigravity a ese API o importa los archivos resultantes.
 
-### En Colab
-
-Colab no se conecta "directo" a Antigravity; lo normal es usar Google Drive o descargar los Parquet/CSV y luego apuntar la herramienta a esa carpeta.
-
 ### Qué conviene usar
 
 - Si Antigravity acepta datasets locales, usa `data/gold/`.
 - Si requiere endpoints, usa el contrato de API anterior.
 
-## 12. Orden de trabajo recomendado para tu entrega de mañana
+## 10. Orden de trabajo recomendado para la entrega
 
 ### Fase 1: dejarlo corriendo
 
@@ -316,7 +256,7 @@ Colab no se conecta "directo" a Antigravity; lo normal es usar Google Drive o de
 
 1. Ejecuta `08_consultas_duckdb.py` y guarda el output.
 2. Abre Streamlit y toma capturas de cada pestaña.
-3. Ejecuta el notebook y guarda las gráficas en `docs/diagramas/`.
+3. Guarda las capturas en `docs/diagramas/`.
 
 ### Fase 3: reporte
 
@@ -324,7 +264,7 @@ Colab no se conecta "directo" a Antigravity; lo normal es usar Google Drive o de
 2. Inserta capturas del dashboard.
 3. Resume PB-1, PB-2 y PB-3 con números concretos.
 
-## 13. Problemas comunes
+## 11. Problemas comunes
 
 ### El CSV no se encuentra
 
@@ -339,13 +279,6 @@ Solución:
 - volver a correr `python run_all.py`,
 - abrir `http://localhost:8501` manualmente.
 
-### El notebook no encuentra rutas
-
-Solución:
-- definir `SSN_PROJECT_ROOT`,
-- correr el notebook desde la raíz del repo,
-- confirmar que `data/silver/` ya existe.
-
 ### Databricks no ve las tablas
 
 Solución:
@@ -353,7 +286,7 @@ Solución:
 - crear las vistas externas,
 - revisar nombres exactos de las vistas.
 
-## 14. Resumen corto del flujo correcto
+## 12. Resumen corto del flujo correcto
 
 ```text
 CSV fuente -> run_all.py -> Bronze -> Silver -> Gold -> DuckDB -> Streamlit -> Reporte
