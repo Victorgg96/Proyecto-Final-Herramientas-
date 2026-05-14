@@ -275,14 +275,14 @@ with tab_map:
     with c1:
         capa = st.radio("Capa", ["Marcadores", "Mapa de calor", "Clusters"], horizontal=True)
     with c2:
-        tile = st.selectbox("Tile", ["CartoDB dark_matter", "CartoDB positron", "OpenStreetMap", "Stamen Terrain"])
+        tile = st.selectbox("Tile", ["OpenStreetMap", "CartoDB dark_matter", "CartoDB positron", "Stamen Terrain"])
     with c3:
         st.write(f"**{len(sig):,}** eventos en pantalla")
 
     tile_map = {
+        "OpenStreetMap": "openstreetmap",
         "CartoDB dark_matter": "cartodbdark_matter",
         "CartoDB positron": "cartodbpositron",
-        "OpenStreetMap": "openstreetmap",
         "Stamen Terrain": "Stamen Terrain",
     }[tile]
 
@@ -290,6 +290,25 @@ with tab_map:
     Fullscreen(position="topright").add_to(m)
     MiniMap(toggle_display=True, position="bottomright").add_to(m)
     MeasureControl(primary_length_unit="kilometers").add_to(m)
+
+    # --- Marcadores de referencia de ciudades (para verificar alineación) ---
+    ciudades_ref = [
+        ("CDMX",        19.4326, -99.1332),
+        ("Acapulco",    16.8531, -99.8237),
+        ("Oaxaca",      17.0732, -96.7266),
+        ("Manzanillo",  19.0524, -104.3148),
+        ("Tijuana",     32.5149, -117.0382),
+        ("Monterrey",   25.6866, -100.3161),
+    ]
+    ref_group = folium.FeatureGroup(name="📌 Ciudades de referencia", show=True)
+    for nombre, lat, lon in ciudades_ref:
+        folium.Marker(
+            [lat, lon],
+            icon=folium.Icon(color="blue", icon="map-marker"),
+            tooltip=f"📌 {nombre} | lat={lat}, lon={lon}",
+            popup=folium.Popup(f"<b>📌 {nombre}</b><br/>lat: {lat}<br/>lon: {lon}", max_width=180),
+        ).add_to(ref_group)
+    ref_group.add_to(m)
 
     sub = sig.head(3000) if capa == "Marcadores" else sig
 
@@ -304,13 +323,14 @@ with tab_map:
             folium.Marker(
                 [r["latitud"], r["longitud"]],
                 icon=folium.Icon(color=color, icon="info-sign"),
-                tooltip=f"M{r['magnitud']:.1f}",
+                tooltip=f"M{r['magnitud']:.1f} | lat={r['latitud']:.3f}, lon={r['longitud']:.3f}",
                 popup=folium.Popup(
                     f"<b>M{r['magnitud']:.1f}</b> — {r['clasificacion_magnitud']}<br/>"
                     f"📅 {r['fecha_local']}<br/>"
                     f"📍 {r['estado']} ({r['region_sismica']})<br/>"
                     f"🌊 Prof: {r['profundidad_km']:.1f} km<br/>"
-                    f"📐 Dist CDMX: {r['distancia_cdmx_km']:.0f} km", max_width=260),
+                    f"📐 Dist CDMX: {r['distancia_cdmx_km']:.0f} km<br/>"
+                    f"<small>🔎 lat={r['latitud']:.4f}, lon={r['longitud']:.4f}</small>", max_width=280),
             ).add_to(cluster)
     else:  # Marcadores
         for _, r in sub.iterrows():
@@ -319,12 +339,13 @@ with tab_map:
             folium.CircleMarker(
                 [r["latitud"], r["longitud"]],
                 radius=radio, color=color, fill=True, fill_opacity=0.65, weight=1,
-                tooltip=f"M{r['magnitud']:.1f} - {r['estado']}",
+                tooltip=f"M{r['magnitud']:.1f} | lat={r['latitud']:.3f}, lon={r['longitud']:.3f}",
                 popup=folium.Popup(
                     f"<b>M{r['magnitud']:.1f}</b> {r['clasificacion_magnitud']}<br/>"
                     f"📅 {r['fecha_local']}<br/>"
                     f"📍 {r['estado']} ({r['region_sismica']})<br/>"
-                    f"🌊 {r['profundidad_km']:.1f} km", max_width=260),
+                    f"🌊 {r['profundidad_km']:.1f} km<br/>"
+                    f"<small>🔎 lat={r['latitud']:.4f}, lon={r['longitud']:.4f}</small>", max_width=280),
             ).add_to(m)
 
     folium.LayerControl(collapsed=False).add_to(m)
