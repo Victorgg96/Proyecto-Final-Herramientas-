@@ -30,38 +30,60 @@ st.set_page_config(
 
 CSS = """
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     .main {background-color: #0e1117;}
-    .block-container {padding-top: 1.5rem; padding-bottom: 0rem; max-width: 1400px;}
-    h1, h2, h3 {color: #fafafa; font-family: 'Segoe UI', sans-serif;}
-    h1 {font-weight: 600; letter-spacing: -0.5px;}
+    .block-container {padding-top: 1.2rem; padding-bottom: 0rem; max-width: 1440px;}
+    h1, h2, h3, p, span, div {font-family: 'Inter', 'Segoe UI', sans-serif;}
+    h1 {color: #fafafa; font-weight: 700; letter-spacing: -0.5px;}
+    h2, h3 {color: #e8eaed;}
     .stMetric {
-        background: linear-gradient(135deg, #1e2530 0%, #2a3441 100%);
-        border-radius: 12px;
-        padding: 18px;
+        background: linear-gradient(135deg, #1a1f2e 0%, #232b3b 100%);
+        border-radius: 14px; padding: 20px;
         border-left: 4px solid #ff6b35;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    [data-testid="stMetricValue"] {font-size: 28px; font-weight: 700; color: #ff6b35;}
-    [data-testid="stMetricLabel"] {color: #c0c8d4; font-weight: 500;}
+    .stMetric:hover {transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,107,53,0.15);}
+    [data-testid="stMetricValue"] {font-size: 28px; font-weight: 800; color: #ff6b35;}
+    [data-testid="stMetricLabel"] {color: #9ca3b0; font-weight: 500; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;}
     [data-testid="stMetricDelta"] {color: #6cc04a;}
-    .stTabs [data-baseweb="tab-list"] {gap: 4px; background: #1a1f29; padding: 6px; border-radius: 10px;}
+    .kpi-card {
+        background: linear-gradient(135deg, #1a1f2e 0%, #232b3b 100%);
+        border-radius: 14px; padding: 22px 20px; text-align: center;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border-bottom: 3px solid #ff6b35;
+    }
+    .kpi-card:hover {transform: translateY(-3px); box-shadow: 0 8px 28px rgba(255,107,53,0.18);}
+    .kpi-icon {font-size: 26px; margin-bottom: 6px;}
+    .kpi-value {font-size: 30px; font-weight: 800; color: #ff6b35; margin: 4px 0;}
+    .kpi-label {font-size: 12px; color: #8b95a5; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600;}
+    .stTabs [data-baseweb="tab-list"] {gap: 4px; background: #151a24; padding: 6px; border-radius: 12px;}
     .stTabs [data-baseweb="tab"] {
-        height: 42px; padding: 0 22px; background: transparent; color: #b0b8c4;
-        border-radius: 8px; font-weight: 500; font-size: 14px;
+        height: 44px; padding: 0 24px; background: transparent; color: #8b95a5;
+        border-radius: 10px; font-weight: 600; font-size: 13px;
+        transition: all 0.25s ease;
     }
-    .stTabs [aria-selected="true"] {background: #ff6b35 !important; color: white !important;}
-    section[data-testid="stSidebar"] {background: #161b22;}
-    section[data-testid="stSidebar"] h2 {color: #ff6b35; font-size: 18px;}
+    .stTabs [data-baseweb="tab"]:hover {color: #c0c8d4; background: rgba(255,255,255,0.04);}
+    .stTabs [aria-selected="true"] {background: linear-gradient(135deg, #ff6b35, #e85d2a) !important; color: white !important;}
+    section[data-testid="stSidebar"] {background: linear-gradient(180deg, #13171e 0%, #161b22 100%);}
+    section[data-testid="stSidebar"] h2 {color: #ff6b35; font-size: 17px; font-weight: 700;}
     .badge {
-        display: inline-block; padding: 4px 10px; border-radius: 6px;
-        font-size: 11px; font-weight: 600; margin-right: 6px;
+        display: inline-block; padding: 5px 12px; border-radius: 8px;
+        font-size: 11px; font-weight: 700; margin-right: 6px; letter-spacing: 0.3px;
     }
-    .badge-red {background: #d9534f; color: white;}
-    .badge-orange {background: #f0ad4e; color: white;}
-    .badge-yellow {background: #f7e733; color: #333;}
-    .badge-green {background: #5cb85c; color: white;}
-    .footer {color: #6c757d; font-size: 12px; text-align: center; padding: 20px 0;}
-    div[data-testid="stExpander"] {background: #1a1f29; border-radius: 10px; border: 1px solid #2a3441;}
+    .badge-red {background: rgba(217,83,79,0.2); color: #ff6b6b; border: 1px solid rgba(217,83,79,0.3);}
+    .badge-orange {background: rgba(240,173,78,0.2); color: #f0ad4e; border: 1px solid rgba(240,173,78,0.3);}
+    .badge-yellow {background: rgba(247,199,72,0.15); color: #f7c548; border: 1px solid rgba(247,199,72,0.3);}
+    .badge-green {background: rgba(92,184,92,0.2); color: #6cc04a; border: 1px solid rgba(92,184,92,0.3);}
+    .footer {color: #4a5568; font-size: 12px; text-align: center; padding: 30px 0 10px 0; border-top: 1px solid #1e2530;}
+    div[data-testid="stExpander"] {background: #171c26; border-radius: 12px; border: 1px solid #262f3d;}
+    .pipeline-step {
+        background: #1a1f2e; border-radius: 10px; padding: 16px; text-align: center;
+        border: 1px solid #262f3d;
+    }
+    .pipeline-step h4 {color: #ff6b35; margin: 0 0 4px 0; font-size: 15px;}
+    .pipeline-step p {color: #8b95a5; margin: 0; font-size: 13px;}
 </style>
 """
 st.markdown(CSS, unsafe_allow_html=True)
@@ -124,9 +146,20 @@ def cargar_silver_metricas():
     }
 
 
+@st.cache_data(show_spinner="Cargando datos temporales de Silver...")
+def cargar_silver_temporal():
+    df = pd.read_parquet(SILVER_PATH, engine="pyarrow",
+                         columns=["anio", "mes", "hora_del_dia", "estacion", "magnitud", "dia_semana"])
+    for c in ["anio", "mes", "hora_del_dia"]:
+        if df[c].dtype.name == "category":
+            df[c] = df[c].astype("int32")
+    return df
+
+
 try:
     G = cargar_gold()
     S = cargar_silver_metricas()
+    SILVER_TEMP = cargar_silver_temporal()
 except Exception as e:
     st.error(f"❌ No se pudieron cargar los datos. Corre primero `python run_all.py`.\n\nDetalle: {e}")
     st.stop()
@@ -139,9 +172,9 @@ with hcol1:
     st.markdown("# 🌋 Análisis de Actividad Sísmica en México")
     st.markdown(
         '<span class="badge badge-orange">SSN-UNAM</span>'
-        '<span class="badge badge-red">379,024 eventos</span>'
+        f'<span class="badge badge-red">{S["total"]:,} eventos</span>'
         f'<span class="badge badge-yellow">{S["anio_min"]}–{S["anio_max"]}</span>'
-        '<span class="badge badge-green">Pipeline Bronze→Silver→Gold</span>',
+        '<span class="badge badge-green">Pipeline Bronze → Silver → Gold</span>',
         unsafe_allow_html=True,
     )
 with hcol2:
@@ -199,30 +232,39 @@ anual = anual[(anual["anio"] >= anio_range[0]) & (anual["anio"] <= anio_range[1]
 # ============================================================================
 # KPIs DESTACADOS
 # ============================================================================
-k1, k2, k3, k4, k5 = st.columns(5)
 total_filtrado = int(reg["total_sismos"].sum())
 mag5_filtrado = len(sig)
 mag7_filtrado = int((sig["magnitud"] >= 7).sum())
 mag_max_filtrado = float(sig["magnitud"].max()) if len(sig) else 0.0
 estados_activos = sig["estado"].nunique()
 
-k1.metric("Sismos totales", f"{total_filtrado:,}", help="Suma para el rango filtrado")
-k2.metric("Eventos ≥ 5.0", f"{mag5_filtrado:,}")
-k3.metric("Eventos ≥ 7.0", f"{mag7_filtrado}")
-k4.metric("Magnitud máx", f"M{mag_max_filtrado:.1f}" if mag_max_filtrado else "—")
-k5.metric("Estados afectados", f"{estados_activos}")
+def kpi_card(icon, value, label, color="#ff6b35"):
+    return f'''
+    <div class="kpi-card" style="border-bottom-color: {color};">
+        <div class="kpi-icon">{icon}</div>
+        <div class="kpi-value" style="color: {color};">{value}</div>
+        <div class="kpi-label">{label}</div>
+    </div>'''
+
+k1, k2, k3, k4, k5 = st.columns(5)
+k1.markdown(kpi_card("📊", f"{total_filtrado:,}", "Sismos totales"), unsafe_allow_html=True)
+k2.markdown(kpi_card("⚡", f"{mag5_filtrado:,}", "Eventos ≥ 5.0", "#f7c548"), unsafe_allow_html=True)
+k3.markdown(kpi_card("🔴", f"{mag7_filtrado}", "Eventos ≥ 7.0", "#d9534f"), unsafe_allow_html=True)
+k4.markdown(kpi_card("🏔️", f"M{mag_max_filtrado:.1f}" if mag_max_filtrado else "—", "Magnitud máx", "#e74c3c"), unsafe_allow_html=True)
+k5.markdown(kpi_card("🗺️", f"{estados_activos}", "Estados afectados", "#5bc0de"), unsafe_allow_html=True)
 
 st.markdown("")
 
 # ============================================================================
 # TABS
 # ============================================================================
-tab_map, tab_temp, tab_reg, tab_sig, tab_pb = st.tabs([
+tab_map, tab_temp, tab_reg, tab_sig, tab_pb, tab_cal = st.tabs([
     "🗺️ Mapa interactivo",
     "⏰ Patrones temporales",
     "📍 Análisis regional",
     "⚠️ Sismos significativos",
     "🎯 Preguntas de negocio",
+    "📋 Calidad de datos",
 ])
 
 # ----------------------------------------------------------------------------
@@ -253,8 +295,8 @@ with tab_map:
 
     if capa == "Mapa de calor":
         puntos = sub[["latitud", "longitud", "magnitud"]].dropna().values.tolist()
-        HeatMap(puntos, radius=12, blur=18, min_opacity=0.4,
-                gradient={0.2: "#3a8df5", 0.4: "#f7c548", 0.6: "#ff6b35", 0.9: "#d9534f"}).add_to(m)
+        HeatMap(puntos, radius=15, blur=22, min_opacity=0.35,
+                gradient={0.15: "#ffffb2", 0.35: "#fecc5c", 0.5: "#fd8d3c", 0.7: "#f03b20", 0.9: "#bd0026"}).add_to(m)
     elif capa == "Clusters":
         cluster = MarkerCluster(name="Sismos").add_to(m)
         for _, r in sub.iterrows():
@@ -299,54 +341,65 @@ with tab_map:
 # ----------------------------------------------------------------------------
 with tab_temp:
     st.markdown("### Evolución histórica anual")
+    anual_plot = anual.dropna(subset=["anio", "total_sismos"]).copy()
+    anual_plot["anio"] = anual_plot["anio"].astype(int)
     fig = go.Figure()
     fig.add_trace(go.Scatter(
-        x=anual["anio"], y=anual["total_sismos"],
+        x=anual_plot["anio"], y=anual_plot["total_sismos"],
         mode="lines", fill="tozeroy", name="Total sismos",
         line=dict(color="#ff6b35", width=2),
-        fillcolor="rgba(255,107,53,0.2)",
+        fillcolor="rgba(255,107,53,0.15)",
+        hovertemplate="Año: %{x}<br>Total: %{y:,.0f}<extra></extra>",
     ))
     fig.add_trace(go.Scatter(
-        x=anual["anio"], y=anual["sismos_mag5_plus"],
+        x=anual_plot["anio"], y=anual_plot["sismos_mag5_plus"],
         mode="lines", name="Mag ≥ 5.0",
         line=dict(color="#f7c548", width=2),
         yaxis="y2",
+        hovertemplate="Año: %{x}<br>Mag≥5: %{y:,.0f}<extra></extra>",
     ))
     fig.update_layout(
         yaxis=dict(title="Total sismos"),
         yaxis2=dict(title="Mag ≥ 5.0", overlaying="y", side="right", showgrid=False),
         hovermode="x unified", height=380,
+        xaxis=dict(dtick=5, tickformat="d"),
     )
     st.plotly_chart(style(fig), use_container_width=True)
+
+    # --- Filtrar Silver temporal por rango de años ---
+    st_filt = SILVER_TEMP[(SILVER_TEMP["anio"] >= anio_range[0]) & (SILVER_TEMP["anio"] <= anio_range[1])].copy()
 
     c1, c2 = st.columns(2)
     with c1:
         st.markdown("### Distribución por hora del día")
-        tmp = G["temporal"]
-        hora = (tmp[tmp["hora_del_dia"] >= 0].groupby("hora_del_dia", as_index=False)
-                                              .agg(total=("total_sismos", "sum"),
-                                                   mag=("magnitud_promedio", "mean")))
+        hora = (st_filt[st_filt["hora_del_dia"] >= 0]
+                .groupby("hora_del_dia", as_index=False)
+                .agg(total=("magnitud", "size"), mag=("magnitud", "mean")))
         fig = px.bar(hora, x="hora_del_dia", y="total", color="mag",
-                     color_continuous_scale="Oranges",
+                     color_continuous_scale="OrRd",
                      labels={"hora_del_dia": "Hora", "total": "Eventos", "mag": "Mag prom"})
         fig.update_layout(height=320)
         st.plotly_chart(style(fig), use_container_width=True)
     with c2:
         st.markdown("### Sismos por estación del año")
-        est = tmp.groupby("estacion", as_index=False)["total_sismos"].sum()
-        fig = px.pie(est, names="estacion", values="total_sismos", hole=0.55,
+        est = st_filt.groupby("estacion", as_index=False).agg(total=("magnitud", "size"))
+        fig = px.pie(est, names="estacion", values="total", hole=0.55,
                      color_discrete_sequence=PLOTLY_THEME["colorway"])
         fig.update_traces(textposition="outside", textinfo="label+percent")
         fig.update_layout(height=320, showlegend=False)
         st.plotly_chart(style(fig), use_container_width=True)
 
     st.markdown("### Heatmap: hora del día × mes")
-    pivot = (tmp[tmp["hora_del_dia"] >= 0]
-             .pivot_table(index="hora_del_dia", columns="mes",
-                          values="total_sismos", aggfunc="sum", fill_value=0))
+    hm_data = st_filt[st_filt["hora_del_dia"] >= 0].copy()
+    pivot = hm_data.pivot_table(index="hora_del_dia", columns="mes",
+                                values="magnitud", aggfunc="count", fill_value=0)
+    meses_nombre = {1:"Ene",2:"Feb",3:"Mar",4:"Abr",5:"May",6:"Jun",
+                    7:"Jul",8:"Ago",9:"Sep",10:"Oct",11:"Nov",12:"Dic"}
     fig = go.Figure(go.Heatmap(
-        z=pivot.values, x=[f"Mes {m}" for m in pivot.columns], y=pivot.index,
-        colorscale="Inferno", colorbar=dict(title="Eventos"),
+        z=pivot.values,
+        x=[meses_nombre.get(m, f"M{m}") for m in pivot.columns],
+        y=pivot.index,
+        colorscale="YlOrRd", colorbar=dict(title="Eventos"),
     ))
     fig.update_layout(height=400, yaxis_title="Hora del día")
     st.plotly_chart(style(fig), use_container_width=True)
@@ -437,18 +490,18 @@ with tab_pb:
     st.plotly_chart(style(fig), use_container_width=True)
 
     st.markdown("### 🎯 PB-2 — Patrones temporales")
-    tmp = G["temporal"]
+    pb2_data = SILVER_TEMP[(SILVER_TEMP["anio"] >= anio_range[0]) & (SILVER_TEMP["anio"] <= anio_range[1])]
     c1, c2 = st.columns(2)
     with c1:
-        h = (tmp[tmp["hora_del_dia"] >= 0]
-             .groupby("hora_del_dia", as_index=False)["total_sismos"].sum())
-        fig = px.line(h, x="hora_del_dia", y="total_sismos", markers=True)
+        h = (pb2_data[pb2_data["hora_del_dia"] >= 0]
+             .groupby("hora_del_dia", as_index=False).agg(total=("magnitud", "size")))
+        fig = px.line(h, x="hora_del_dia", y="total", markers=True)
         fig.update_traces(line_color="#ff6b35")
         fig.update_layout(height=300, title="Frecuencia por hora")
         st.plotly_chart(style(fig), use_container_width=True)
     with c2:
-        e = tmp.groupby("estacion", as_index=False)["total_sismos"].sum()
-        fig = px.bar(e, x="estacion", y="total_sismos", color="estacion",
+        e = pb2_data.groupby("estacion", as_index=False).agg(total=("magnitud", "size"))
+        fig = px.bar(e, x="estacion", y="total", color="estacion",
                      color_discrete_sequence=PLOTLY_THEME["colorway"])
         fig.update_layout(height=300, title="Frecuencia por estación", showlegend=False)
         st.plotly_chart(style(fig), use_container_width=True)
@@ -464,6 +517,101 @@ with tab_pb:
                  hover_data={"mag_prom": ":.2f"})
     fig.update_layout(height=340)
     st.plotly_chart(style(fig), use_container_width=True)
+
+# ----------------------------------------------------------------------------
+# TAB 6 — CALIDAD DE DATOS
+# ----------------------------------------------------------------------------
+with tab_cal:
+    st.markdown("### 📋 Pipeline de Calidad: Bronze → Silver → Gold")
+    st.markdown("")
+
+    # Pipeline visual
+    p1, arrow1, p2, arrow2, p3 = st.columns([1, 0.3, 1, 0.3, 1])
+    with p1:
+        st.markdown('''<div class="pipeline-step">
+            <h4>🥉 Bronze</h4>
+            <p>Datos crudos del SSN<br/>Tipos: todo <code>string</code><br/>
+            Sin validación<br/>Particionado por <code>anio_evento</code></p>
+        </div>''', unsafe_allow_html=True)
+    with arrow1:
+        st.markdown('<div style="text-align:center; padding-top:40px; font-size:28px; color:#ff6b35;">→</div>', unsafe_allow_html=True)
+    with p2:
+        st.markdown(f'''<div class="pipeline-step" style="border-color: #ff6b35;">
+            <h4>🥈 Silver</h4>
+            <p><strong>{S["total"]:,}</strong> registros limpios<br/>
+            Tipado, validación geográfica<br/>
+            Extracción de estado (regex)<br/>
+            Clasificación de magnitud</p>
+        </div>''', unsafe_allow_html=True)
+    with arrow2:
+        st.markdown('<div style="text-align:center; padding-top:40px; font-size:28px; color:#ff6b35;">→</div>', unsafe_allow_html=True)
+    with p3:
+        st.markdown('''<div class="pipeline-step">
+            <h4>🥇 Gold</h4>
+            <p>4 tablas agregadas<br/>
+            Regional, Temporal,<br/>
+            Significativos, Evolución<br/>
+            Listas para visualización</p>
+        </div>''', unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # Pasos de limpieza
+    st.markdown("### 🔧 Pasos de limpieza (Bronze → Silver)")
+    pasos = pd.DataFrame({
+        "Paso": ["S-1", "S-2", "S-3", "S-4", "S-5", "S-6", "S-7", "S-8"],
+        "Operación": [
+            "Lectura de Bronze (Parquet crudo)",
+            "Cast de tipos: fecha→datetime, magnitud→float, coords→float",
+            "Flag de magnitud disponible (sin imputación)",
+            "Filtro geográfico MX: lat [14,33], lon [-119,-86], prof [0,700]",
+            "Extracción de estado, región y zona vía regex sobre referencia",
+            "Deduplicación por (fecha, hora, lat, lon)",
+            "Clasificación de magnitud: Micro → Gran sismo",
+            "Columnas derivadas: año, mes, día, hora, estación, década",
+        ],
+        "Impacto": [
+            "Carga de datos crudos",
+            "Permite filtros numéricos y temporales",
+            "Preserva integridad — no se inventan datos",
+            "Elimina registros fuera de territorio mexicano",
+            f"Cobertura: {S['pct_estados']:.1f}% con estado identificado",
+            "Elimina registros repetidos",
+            "7 categorías de severidad",
+            "Habilita análisis temporal multidimensional",
+        ],
+    })
+    st.dataframe(pasos, use_container_width=True, hide_index=True)
+
+    st.markdown("---")
+
+    # Métricas de cobertura
+    st.markdown("### 📊 Cobertura de campos clave")
+    cov1, cov2 = st.columns(2)
+    with cov1:
+        cobertura = pd.DataFrame({
+            "Campo": ["Magnitud", "Estado", "Coordenadas", "Fecha"],
+            "Cobertura (%)": [S["pct_magnitud"], S["pct_estados"], 100.0, 100.0],
+        })
+        fig = px.bar(cobertura, x="Cobertura (%)", y="Campo", orientation="h",
+                     color="Cobertura (%)", color_continuous_scale="YlGn",
+                     range_x=[0, 105])
+        fig.update_layout(height=250, showlegend=False)
+        fig.update_traces(texttemplate="%{x:.1f}%", textposition="outside")
+        st.plotly_chart(style(fig, "Porcentaje de completitud"), use_container_width=True)
+    with cov2:
+        mag_vals = S["magnitudes"]
+        fig = go.Figure(go.Histogram(x=mag_vals, nbinsx=40,
+                                     marker_color="#ff6b35", opacity=0.85))
+        fig.update_layout(height=250, xaxis_title="Magnitud", yaxis_title="Frecuencia")
+        st.plotly_chart(style(fig, "Distribución de magnitudes (Silver)"), use_container_width=True)
+
+    st.markdown("---")
+    st.markdown("### 🏷️ Decisiones técnicas clave")
+    c1, c2, c3 = st.columns(3)
+    c1.info("**pandas + DuckDB** en lugar de PySpark — dataset de ~50 MB cabe en memoria sin necesidad de cluster")
+    c2.info("**Parquet + Snappy** — formato columnar comprimido, compatible con Databricks para migración futura")
+    c3.info("**No imputación** de magnitudes nulas — inventar datos sísmicos sesgaría el análisis")
 
 st.markdown('<div class="footer">'
             'Datos: Servicio Sismológico Nacional · UNAM · DOI 10.21766/SSNMX/EC/MX  |  '
