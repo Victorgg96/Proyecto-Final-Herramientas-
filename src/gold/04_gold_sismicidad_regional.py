@@ -24,8 +24,9 @@ def main():
            .sort_values("total_sismos", ascending=False))
 
     out = GOLD_PATH / "gold_sismicidad_regional"
-    if out.exists(): shutil.rmtree(out)
     out.mkdir(parents=True, exist_ok=True)
+    try: (out / "data.parquet").unlink(missing_ok=True)
+    except PermissionError: pass
     g.to_parquet(out / "data.parquet", index=False, compression="snappy")
     print(f"[OK] gold_sismicidad_regional  filas={len(g):,}")
 

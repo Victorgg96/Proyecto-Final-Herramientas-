@@ -111,7 +111,9 @@ def main():
     print(f"[Silver] Cobertura estado: {(df['estado']!='DESCONOCIDO').mean()*100:.1f}%")
 
     if SILVER_PATH.exists():
-        shutil.rmtree(SILVER_PATH)
+        for f in SILVER_PATH.rglob("*.parquet"):
+            try: f.unlink()
+            except PermissionError: pass
     SILVER_PATH.mkdir(parents=True, exist_ok=True)
 
     print(f"[S-8] Escribiendo Parquet+Snappy particionado por anio")

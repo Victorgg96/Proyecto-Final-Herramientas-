@@ -29,7 +29,9 @@ def main():
     print(f"[B-4] Columnas: {list(df.columns)}")
 
     if BRONZE_PATH.exists():
-        shutil.rmtree(BRONZE_PATH)
+        for f in BRONZE_PATH.rglob("*.parquet"):
+            try: f.unlink()
+            except PermissionError: pass
     BRONZE_PATH.mkdir(parents=True, exist_ok=True)
 
     print(f"[B-5] Escribiendo Parquet particionado por anio_evento en {BRONZE_PATH}")

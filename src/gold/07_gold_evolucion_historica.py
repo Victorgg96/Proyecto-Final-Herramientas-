@@ -32,8 +32,9 @@ def main():
     for nombre, dfx in [("gold_evolucion_historica_anual", anual),
                         ("gold_evolucion_historica_mensual", mensual)]:
         out = GOLD_PATH / nombre
-        if out.exists(): shutil.rmtree(out)
         out.mkdir(parents=True, exist_ok=True)
+        try: (out / "data.parquet").unlink(missing_ok=True)
+        except PermissionError: pass
         dfx.to_parquet(out / "data.parquet", index=False, compression="snappy")
         print(f"[OK] {nombre}  filas={len(dfx):,}")
 
