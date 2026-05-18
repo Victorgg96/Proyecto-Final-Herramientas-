@@ -1,4 +1,4 @@
-# Proyecto SSN-UNAM v2 · Análisis de Sismos en México 🌎
+# Proyecto SSN-UNAM · Análisis de Sismos en México
 
 Pipeline **Bronze → Silver → Gold** sobre 379k sismos del Servicio Sismológico Nacional (1900–2026), implementado con **pandas + pyarrow + DuckDB** (sin PySpark, sin Java). Incluye dashboard Streamlit interactivo y queries SQL portables a Databricks.
 
@@ -6,7 +6,7 @@ Pipeline **Bronze → Silver → Gold** sobre 379k sismos del Servicio Sismológ
 
 ---
 
-## 📁 Estructura
+## Estructura
 
 ```
 proyecto_sismos_v2/
@@ -27,7 +27,7 @@ proyecto_sismos_v2/
 └── requirements.txt
 ```
 
-## 🔧 Requisitos
+## Requisitos
 
 - **Python 3.9 a 3.12** (recomendado 3.11)
 - ~200 MB libres en disco
@@ -42,7 +42,7 @@ py -3.11 -m venv .venv
 pip install -r requirements.txt
 ```
 
-## ▶️ Ejecución
+## Ejecución
 
 ### Pipeline completo (un solo comando)
 
@@ -91,11 +91,6 @@ Detener: `Ctrl+C` en la terminal.
 python src/queries/08_consultas_duckdb.py
 ```
 Imprime PB-1, PB-2, PB-3 + extras en consola.
-
-### Databricks
-1. Sube `data/gold/` a DBFS.
-2. Registra vistas externas con `CREATE OR REPLACE TEMP VIEW … USING parquet`.
-3. Abre `sql/queries_databricks.sql` en el SQL Editor y ejecuta Q1-Q10.
 
 ## ❗ Troubleshooting
 
